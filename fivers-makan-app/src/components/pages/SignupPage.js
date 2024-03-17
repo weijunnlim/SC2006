@@ -10,7 +10,7 @@ function SignupPage() {
     password: '',
     confirmPassword: '',
     phoneNumber: '',
-    dietaryRequirements: '',
+    dietaryRequirements: [],
     meatRestrictionsDetails: '', 
     userType: ' ',
   });
@@ -24,11 +24,22 @@ function SignupPage() {
 
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const { name, value, options } = e.target;
+    
+    if (e.target.multiple) {
+      const selectedOptions = Array.from(options)
+          .filter(option => option.selected)
+          .map(option => option.value);
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: selectedOptions,
+      }));
+    } else {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -53,7 +64,7 @@ function SignupPage() {
         <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} />
         <input type="text" name="phoneNumber" placeholder="Phone Number(eg. 81234567, no space)" value={formData.phoneNumber} onChange={handleChange} />
         {phoneNumberError && <p className = "error-message">{phoneNumberError}</p>}
-        <select name="dietaryRequirements" value={formData.dietaryRequirements} onChange={handleChange}>
+        <select name="dietaryRequirements" value={formData.dietaryRequirements} onChange={handleChange} multiple className ="multi-select">
           <option value="">Select Dietary Requirement</option>
           <option value="Halal">Halal food</option>
           <option value="Vegetarian">Vegetarian food</option>
