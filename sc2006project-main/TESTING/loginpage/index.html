@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | YourSiteName</title>
+       <!-- Firebase SDK Scripts -->
+       <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-auth.js"></script>
+    <link rel="stylesheet" href="loginstyle.css">
+</head>
+<body>
+    <div id="content_container">
+        <div id="form_container">
+            <div id="form_header_container">
+                <h2 id="form_header"> Login + Firebase Database</h2>
+            </div>
+            <div id="form_content_container">
+                <div id="form_content_inner_container">
+                    <div class="input-group">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" placeholder="Email">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" placeholder="Password">
+                    </div>
+                    <div class="button-group">
+                        <button onclick="login()">Login</button>
+                        <button onclick="location.href='register.html'">Register</button>
+                    </div>
+                    <!-- Add error message container -->
+                    <div id="login-error-message" class="error-message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+            <!-- Your custom JavaScript file -->
+            <script src="firebase.js"></script>
+            <script src="loginscript.js"></script>
+</body>
+</html>

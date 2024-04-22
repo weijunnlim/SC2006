@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pezzo</title>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-auth.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+        .container {
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="time"],
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pezzo</h1>
+        <p><strong>Rating:</strong> 2.8</p>
+        <p><strong>Address:</strong> 311 New Upper Changi Road, #B2-K1 Bedok Mall, Singapore</p>
+        <p><strong>Price Level:</strong> Not available</p>
+        
+        <!-- Reservation Form -->
+        <h2>Reservation Form</h2>
+        <form id="reservationForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+            
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required><br>
+            
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+            
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required><br>
+                       <label for="guests">Number of Guests:</label>
+            <input type="number" id="guests" name="guests" min="1" required><br>
+            
+            <input type="submit" value="Submit Reservation">
+        </form>
+    </div>
+
+    <script>
+     
+        // Event listener for reservation form submission
+        document.getElementById('reservationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+        const guests = parseInt(document.getElementById('guests').value); // Parse the number of guests as an integer
+        if (name.trim() === '' || email.trim() === '' || phone.trim() === '' || date.trim() === '' || time.trim() === '' || isNaN(guests)) { // Check if guests is NaN
+            alert('Please fill out all fields correctly.');
+            return;
+    }
+
+    // Get the current user's ID
+    const currentUser = firebase.auth().currentUser;
+    const userID = currentUser ? currentUser.uid : null;
+
+    // Save reservation to Firestore
+    saveReservationToFirestore(name, email, phone, date, time, guests, userID);
+
+    // Reset form fields
+    document.getElementById('reservationForm').reset();
+
+    // Optionally, display a success message or perform other actions
+    alert('Reservation submitted successfully!');
+});
+
+// Function to save reservation to Firestore
+function saveReservationToFirestore(name, email, phone, date, time, guests, userID) {
+    const reservationData = {
+        restaurantName: "Pezzo",
+        restaurantAddress: "311 New Upper Changi Road, #B2-K1 Bedok Mall, Singapore",
+        name: name,
+        email: email,
+        phone: phone,
+        date: date,
+        time: time,
+        guests: guests,
+        completed: false,
+        userId: userID // Include the userID in the reservation data
+    };
+
+    db.collection('reservations').add(reservationData)
+        .then(function(docRef) {
+            console.log("Reservation added with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding reservation: ", error);
+        });
+}
+
+    </script>
+
+    <script src="../loginpage/firebase.js"></script>
+</body>
+</html>

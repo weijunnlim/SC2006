@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservations</title>
+</head>
+<body>
+    <h1>Reservations</h1>
+    <ul id="reservationList"></ul>
+
+    <script>
+        // Retrieve reservations from local storage
+        var reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+
+        // Display reservations in the list
+        var reservationList = document.getElementById('reservationList');
+        reservations.forEach(function(reservation) {
+            var listItem = document.createElement('li');
+            listItem.textContent = `Name: ${reservation.name}, Email: ${reservation.email}, Phone: ${reservation.phone}, Date: ${reservation.date}, Time: ${reservation.time}, Guests: ${reservation.guests}`;
+            reservationList.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>

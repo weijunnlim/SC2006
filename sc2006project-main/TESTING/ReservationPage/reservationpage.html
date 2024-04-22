@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <!-- Firebase scripts -->
+       <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-auth.js"></script>
+      
+    <title>My Reservations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #reservationList {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .reservation {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .reservation p {
+            margin: 5px 0;
+        }
+
+        .reservation hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 10px 0;
+        }
+
+        .no-reservations {
+            text-align: center;
+        }
+
+        .edit-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Reservations</h1>
+    <div id="reservationList"></div>
+
+    <script>
+        // Wait for the DOMContentLoaded event before executing Firebase-related code
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if a user is signed in
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    // User is signed in, retrieve reservations
+                    const userId = user.uid;
+                    const reservationList = document.getElementById('reservationList');
+
+                    // Query Firestore for reservations associated with the user's ID
+                    db.collection('reservations').where('userId', '==', userId).get()
+                        .then((querySnapshot) => {
+                            // Clear existing reservation list
+                            reservationList.innerHTML = '';
+
+                            // Check if there are no reservations
+                            if (querySnapshot.empty) {
+                                reservationList.innerHTML = "<p>No current reservations.</p>";
+                            } else {
+                                // Iterate through the reservations and render them on the page
+                                querySnapshot.forEach((doc) => {
+                                    const reservationData = doc.data();
+                                    const reservationElement = document.createElement('div');
+                                    reservationElement.className = 'reservation';
+                                    reservationElement.innerHTML = `
+                                        <p>Name: ${reservationData.name}</p>
+                                        <p>Email: ${reservationData.email}</p>
+                                        <p>Phone: ${reservationData.phone}</p>
+                                        <p>Date: ${reservationData.date}</p>
+                                        <p>Time: ${reservationData.time}</p>
+                                        <p>Guests: ${reservationData.guests}</p>
+                                        <button class="edit-button" onclick="editReservation('${doc.id}')">Edit</button>
+                                        <hr>
+                                    `;
+                                    reservationList.appendChild(reservationElement);
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error retrieving reservations:', error);
+                        });
+                } else {
+                    // User is not signed in, redirect to login page or display message
+                    console.log('User is not signed in.');
+                    // Redirect or display message to prompt user to sign in
+                }
+            });
+        });
+
+        // Function to handle editing a reservation
+        function editReservation(reservationId) {
+            // Redirect to a page where the user can edit the reservation with the specified ID
+            window.location.href = `editReservationPage.html?id=${reservationId}`;
+        }
+    </script>
+    <script src="../loginpage/firebase.js"></script>
+</body>
+</html>

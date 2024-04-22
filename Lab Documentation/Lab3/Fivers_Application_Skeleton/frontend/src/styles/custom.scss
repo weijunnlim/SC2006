@@ -1,0 +1,17 @@
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+
+$custom-theme-colors: (
+    "thdkgreen" : #12372A,
+    "thgreen" : #436850,
+    "thlhgreen" : #ADBC9F,
+    "thllhgreen":#FBFADA
+
+);
+
+$theme-colors: map_merge($custom-theme-colors, $theme-colors);
+
+
+@import "../node_modules/bootstrap/scss/bootstrap";

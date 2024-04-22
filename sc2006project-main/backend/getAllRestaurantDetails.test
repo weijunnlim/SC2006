@@ -1,0 +1,13 @@
+http://localhost:4000/api/search/restaurants
+
+{
+  "location": {
+    "latitude": 1.346276735010386,
+    "longitude": 103.68138362454889
+  }
+ // "distance" : 1000
+  //"specifiedRestaurantName": "Blue Ocean Kopi & Toast"
+
+ //"minRating": 4
+ // "dietaryRestriction": "halal"
+}

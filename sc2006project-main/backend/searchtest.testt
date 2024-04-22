@@ -1,0 +1,13 @@
+POST http://localhost:4000/api/search
+Content-Type: application/json
+
+{
+  "location": {
+    "lat": 1.3247,
+    "lng": 103.9293
+  },
+  "radius": 1000,
+  "minRating": 4,
+  // "specifiedRestaurantName" : ""
+  "dietaryRestriction": " Halal"
+}

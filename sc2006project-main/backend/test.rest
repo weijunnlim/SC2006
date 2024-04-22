@@ -1,0 +1,30 @@
+### POST FRIEND TEST
+
+POST http://localhost:4000/api/login
+Content-Type: application/json
+
+{
+    "email":"test@test.com",
+    "full_name": "test",
+    "password": "potatoepassword",
+    "type": "amongus"
+}
+
+###
+POST http://localhost:4000/api/authentication/authenUser
+Content-Type: application/json
+
+{
+    "email": "patron2@gmail.com",
+    "password": "Potatoe!0"
+}
+
+
+###
+POST http://localhost:4000/api/authentication/verifyToken
+Content-Type: application/json
+
+{
+    "token" : "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgwNzhkMGViNzdhMjdlNGUxMGMzMTFmZTcxZDgwM2I5MmY3NjYwZGYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZml2ZXJzLTE0ZDI2IiwiYXVkIjoiZml2ZXJzLTE0ZDI2IiwiYXV0aF90aW1lIjoxNzEyNDcxMTU1LCJ1c2VyX2lkIjoiQ2pwT1YxczJaQVB2RmNMYWpkblVMU2NHZmQ1MyIsInN1YiI6IkNqcE9WMXMyWkFQdkZjTGFqZG5VTFNjR2ZkNTMiLCJpYXQiOjE3MTI0NzExNTUsImV4cCI6MTcxMjQ3NDc1NSwiZW1haWwiOiJwYXRyb24yQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJwYXRyb24yQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.rpBM-0EO7a3axa1iVntY4v19cVVevo8pG4GjusC_V2nKQ-OsnAQyrqP-oXHR7TPoMmN7HPlwBx-iXVazCvk76XTToK2xrbTfgHpMc9INHKlPeAinZmBXCTf8n6hvtBG73CcYHylyUIHntziG7TvFbwjeogSUH8KnpN6N0VULHy9yAaq2eoHssH2UB7lQEUsrAmBp7KyL3SMNMzXENZazrenWXq4MuoR-n77xESS5jdHYwsN7JaURVsEycLB2_0PiPu_TEynq3USkLzD6fhxCDRnLGg4x2BaEGnczA5gVeQ2d-vLv6lwEYKjw80Z4sKlSzqsyKlC0HCIWyyftqHvL7w"
+}
+

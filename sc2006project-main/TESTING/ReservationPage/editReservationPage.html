@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Reservation</title>
+           <!-- Firebase scripts -->
+           <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+           <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+           <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-auth.js"></script>
+           <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+            }
+    
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+    
+            form {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+    
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+    
+            input[type="text"],
+            input[type="email"],
+            input[type="date"],
+            input[type="time"],
+            input[type="number"],
+            button {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+    
+            button {
+                background-color: #007bff;
+                color: #fff;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+    
+            button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+</head>
+<body>
+    <h1>Edit Reservation</h1>
+    <!-- Form to edit reservation details -->
+    <form id="editReservationForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+        <label for="phone">Phone:</label><br>
+        <input type="text" id="phone" name="phone" required><br>
+        <label for="date">Date:</label><br>
+        <input type="date" id="date" name="date" required><br>
+        <label for="time">Time:</label><br>
+        <input type="time" id="time" name="time" required><br>
+        <label for="guests">Number of Guests:</label><br>
+        <input type="number" id="guests" name="guests" min="1" required><br>
+        <button type="submit">Update Reservation</button>
+    </form>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve reservation ID from URL query parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const reservationId = urlParams.get('id');
+
+            // Fetch reservation details from Firestore using reservationId
+            db.collection('reservations').doc(reservationId).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const reservationData = doc.data();
+                        // Populate form fields with reservation details
+                        document.getElementById('name').value = reservationData.name;
+                        document.getElementById('email').value = reservationData.email;
+                        document.getElementById('phone').value = reservationData.phone;
+                        document.getElementById('date').value = reservationData.date;
+                        document.getElementById('time').value = reservationData.time;
+                        document.getElementById('guests').value = reservationData.guests;
+                    } else {
+                        console.log('No such reservation!');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error retrieving reservation:', error);
+                });
+
+            // Add event listener to handle form submission and update reservation
+            document.getElementById('editReservationForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const newName = document.getElementById('name').value;
+                const newEmail = document.getElementById('email').value;
+                const newPhone = document.getElementById('phone').value;
+                const newDate = document.getElementById('date').value;
+                const newTime = document.getElementById('time').value;
+                const newGuests = parseInt(document.getElementById('guests').value); // Parse the number of guests as an integer
+
+                // Update reservation in Firestore
+                db.collection('reservations').doc(reservationId).update({
+                    name: newName,
+                    email: newEmail,
+                    phone: newPhone,
+                    date: newDate,
+                    time: newTime,
+                    guests: newGuests
+                })
+                .then(() => {
+                    console.log('Reservation updated successfully!');
+                    // Redirect user back to the reservations page
+                    window.location.href = 'reservationpage.html';
+                })
+                .catch((error) => {
+                    console.error('Error updating reservation:', error);
+                });
+            });
+        });
+    </script>
+
+<script src="../loginpage/firebase.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+function ConfirmModal({ show, onClose, onConfirm, children }) {
+  if (!show) {
+    return null;
+  }
+
+  return (
+    <div className="modal-backdrop">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Confirm Action</h5>
+        </div>
+        <div className="modal-body">{children}</div>
+        <div className="modal-footer">
+          <button onClick={onClose} className="btn btn-secondary">
+            Cancel
+          </button>
+          <button onClick={onConfirm} className="btn btn-danger">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ConfirmModal;

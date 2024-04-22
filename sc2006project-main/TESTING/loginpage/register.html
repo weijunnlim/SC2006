@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-auth.js"></script>
+        <link rel="stylesheet" href="loginstyle.css">
+    </head>
+    <body>
+        <div id="content_container">
+            <div id="form_container">
+                <div id="form_header_container">
+                    <h2 id="form_header">Register + Firebase Database</h2>
+                </div>
+                <div id="form_content_container">
+                    <div id="form_content_inner_container">
+                        <!-- Dropdown menu to choose user role -->
+                        <div class="input-group">
+                            <label for="user_role">Register As:</label>
+                            <select id="user_role">
+                                <option value="user">User</option>
+                                <option value="restaurant_owner">Restaurant Owner</option>
+                            </select>
+                        </div>
+                        <!-- Add role-specific fields -->
+                        <div id="user_fields">
+                            <div class="input-group">
+                                <label for="full_name">Full Name:</label>
+                                <input type="text" id="full_name" placeholder="Full Name">
+                            </div>
+                            <div class="input-group">
+                                <label for="user_email">Email:</label>
+                                <input type="text" id="user_email" placeholder="Email">
+                            </div>
+                            <div class="input-group">
+                                <label for="user_password">Password:</label>
+                                <input type="password" id="user_password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div id="restaurant_fields" style="display: none;">
+                            <div class="input-group">
+                                <label for="restaurant_name">Restaurant Name:</label>
+                                <input type="text" id="restaurant_name" placeholder="Restaurant Name">
+                            </div>
+                            <div class="input-group">
+                                <label for="restaurant_address">Address:</label>
+                                <input type="text" id="restaurant_address" placeholder="Address">
+                            </div>
+                            <div class="input-group">
+                                <label for="restaurant_username">Username:</label>
+                                <input type="text" id="restaurant_username" placeholder="Username">
+                            </div>
+                            <div class="input-group">
+                                <label for="restaurant_email">Email:</label>
+                                <input type="text" id="restaurant_email" placeholder="Email">
+                            </div>
+                            <div class="input-group">
+                                <label for="restaurant_password">Password:</label>
+                                <input type="password" id="restaurant_password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button onclick="register()">Register</button>
+                        </div>
+                        <!-- Add error message container -->
+                        <div id="signup-error-message" class="error-message"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Link to return to the login page -->
+            <p> <a href="index.html">Back to Login</a></p>
+        </div>
+
+        <script>
+            // Function to show/hide fields based on role selection
+            function toggleFields() {
+                const role = document.getElementById('user_role').value;
+                const userFields = document.getElementById('user_fields');
+                const restaurantFields = document.getElementById('restaurant_fields');
+                if (role === 'restaurant_owner') {
+                    userFields.style.display = 'none';
+                    restaurantFields.style.display = 'block';
+                } else {
+                    userFields.style.display = 'block';
+                    restaurantFields.style.display = 'none';
+                }
+            }
+    
+            // Add event listener to role selection dropdown
+            document.getElementById('user_role').addEventListener('change', toggleFields);
+    
+            // Call toggleFields initially to set the initial field display
+            toggleFields();
+        </script>
+    
+            <!-- Your custom JavaScript file -->
+            <script src="firebase.js"></script>
+            <script src="loginscript.js"></script>
+    </body>
+    </html>
+

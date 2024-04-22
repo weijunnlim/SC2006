@@ -1,0 +1,13 @@
+.primary{
+    color: green;
+}
+
+.active-dietary-option {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text color */
+  }
+  
+  .dropdown-item {
+    cursor: pointer;
+  }
+  
